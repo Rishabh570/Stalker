@@ -1,0 +1,60 @@
+{% extends 'app/base.html' %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12" style="background-color: rgba(128, 128, 128, 0.322); border-bottom: .51em solid brown;">
+            <h1 class="display-3 d-inline-block">Dashboard</h1>
+            <a class="mx-0 d-inline-block" href="/logout/" id="logout">
+                <img src="{% static "images/logout.svg" %}" width="30" height="30" class="d-inline-block align-right" alt="logout">
+                Log Out
+            </a>
+        </div>
+    </div>
+
+    <div class="row mt-1">
+        <div id="report" class="col-md-12" style="background-color: rgba(6, 120, 173, 0.425);">
+            <h2 class="display-4 d-inline-block">Report</h2>    
+            
+            {% if request.session.github %}
+                <button type="button" class="btn btn-info mx-5 mb-4 d-inline-block" id="github-report">Github</button>
+            {% endif %}
+            {% if request.session.facebook %}
+                <button type="button" class="btn btn-danger mx-5 mb-4 d-inline-block" id="facebook-report">Facebook</button>
+            {% endif %}
+            {% if request.session.instagram %}
+                <button type="button" class="btn btn-danger mx-5 mb-4 d-inline-block" id="instagram-report">Instagram</button>
+            {% endif %}
+            {% if request.session.medium %}
+                <button type="button" class="btn btn-danger mx-5 mb-4 d-inline-block" id="medium-report">Medium</button>
+            {% endif %}
+            {% if request.session.stackoverflow %}
+                <button type="button" class="btn btn-danger mx-5 mb-4 d-inline-block" id="stackoverflow-report">Stackoverflow</button>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" style="border-radius: 0 0 1em 1em; background-color: rgba(44, 189, 63, 0.342);">
+            <div id="report" class="mx-auto px-5 py-5" style="height: 20em;">
+                <ul id="report-place">
+                    <button id="github-remove" style="display: none;" type="button" class="btn btn-dark">Stop Stalking</button>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+{% endblock content %}
+
+
+{% block script %}
+    <script src="{% static "js/jquery-3.3.1.min.js" %}"></script>
+    <script src="{% static "js/Dashboard.js" %}"></script>
+{% endblock script %}
+
