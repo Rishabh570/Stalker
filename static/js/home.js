@@ -3,7 +3,7 @@ $(document).ready(() => {
 
     $('#github-submit').click(() => {
             const input = $('#github-input').val();
-            console.log('input is', input);
+
             $.get('/stalk_on_github/', myData = {'filter': input}, (response) => {
                 console.log(response);
                 if(response === "success") {
@@ -12,7 +12,6 @@ $(document).ready(() => {
                     console.log("failed");
                 }
             });
-        }
     });
 
-})
+});

@@ -123,7 +123,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "/users/hp/Stalker/app/static/"),
+    os.path.join(BASE_DIR, "/users/hp/desktop/static/"),
     #'/var/www/static/',
 ]
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), '/users/hp/Stalker/static')

@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^github-report/$', views.github_report, name='github-report'),
     url(r'^remove-github/$', views.remove_github, name='remove-github'),
 
+    url(r'^stalk_on_facebook/$', views.stalk_on_facebook, name="stalk_on_facebook"),
+
 ]
