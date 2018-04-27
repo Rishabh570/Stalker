@@ -52,15 +52,13 @@ def dashboard(request):
 
 @login_required(login_url='/login/')
 def stalk_on_github(request):
-    request.session['github'] = True
-
     username = request.GET.get('filter')
     url = 'https://api.github.com/users/{}/events/public'.format(username)
 
     try:
         res = requests.get(url).json()
     except:
-        return HttpResponse("failed")
+        return HttpResponse("failed at github request for user profile")
     res = json.dumps(res)
 
 
@@ -76,64 +74,17 @@ def stalk_on_github(request):
         github_data.victim = username
         github_data.save()
 
-    return HttpResponse("success")
+    user_info = Githubdata.objects.filter(user=request.user).first()
+    if user_info == None:
+        return HttpResponse("failed here")
+    
+    request.session['target'] = user_info.victim
+    user_info = json.loads(user_info.data)
 
-
-def github_report(request):
-    github = Githubdata.objects.filter(user=request.user).first()
-    if github == None:
-        return HttpResponse(status=500)
-    info = github.data
-    string = json.loads(info)
-
-    return JsonResponse(string, safe=False)
+    return JsonResponse(user_info, safe=False)
 
 def remove_github(request):
-    del request.session['github']
+    del request.session['target']
     github = Githubdata.objects.filter(user=request.user).delete()
     return HttpResponse("success")
 
-
-################################### STALK ON FACEBOOK #######################################
-
-@login_required(login_url='/login/')
-def stalk_on_facebook(request):
-    request.session['facebook'] = True
-
-    username = request.GET.get('filter')
-    # url = 'https://api.github.com/users/{}/events/public'.format(username)
-
-    # try:
-    #     res = requests.get(url).json()
-    # except:
-    #     return HttpResponse("failed")
-    # res = json.dumps(res)
-
-
-    facebook_data = Facebookdata.objects.filter(user=request.user).first()
-    if facebook_data == None:
-        print("creating Facebookdata model instance")
-        # Create a model instance to store victim's facebook activity
-        Facebookdata.objects.create(user=request.user, service='facebook', data=res, victim=username)
-    else:
-        print("Facebookdata model instance already exists")
-        # If similar model instance exists, update its data field to the new JSON payload
-        facebook_data.data = res
-        facebook_data.victim = username
-        facebook_data.save()
-
-    return HttpResponse("success")
-
-def facebook_report(request):
-    facebook = Facebookdata.objects.filter(user=request.user).first()
-    if facebook == None:
-        return HttpResponse(status=500)
-    info = facebook.data
-    string = json.loads(info)
-
-    return JsonResponse(string, safe=False)
-
-def remove_facebook(request):
-    del request.session['facebook']
-    facebook = Githubdata.objects.filter(user=request.user).delete()
-    return HttpResponse("success")

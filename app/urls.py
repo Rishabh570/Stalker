@@ -7,12 +7,9 @@ urlpatterns = [
     url(r'^logout/$', views.log_out, name='logout'),
     url(r'^signup/$', views.sign_up, name='signup'),
     url(r'^home/$', views.home, name='home'),
-    url(r'^dashboard/$', views.dashboard, name='dashboard'),
 
     url(r'^stalk_on_github/$', views.stalk_on_github, name="stalk_on_github"),
-    url(r'^github-report/$', views.github_report, name='github-report'),
     url(r'^remove-github/$', views.remove_github, name='remove-github'),
 
-    url(r'^stalk_on_facebook/$', views.stalk_on_facebook, name="stalk_on_facebook"),
 
 ]
